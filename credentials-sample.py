@@ -6,5 +6,8 @@ credentials = {
     'guacamole': {
         'user': '',
         'pass': ''
+    },
+    'moodle': {
+        'api_token': ''
     }
 }

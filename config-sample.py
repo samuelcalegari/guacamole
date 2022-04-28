@@ -12,4 +12,28 @@ config = {
         'server': '',  # Guacamole server
         'group': ''  # Specific group must be create in guacamole before
     },
+    'moodle': {
+        'api_end_point': '',
+        # Moodle API End Point used in cron-moodle.py,
+        # which returns users list in JSON format such as below,
+        # needs specific plugin installed in Moodle (mod_guacamole)
+    },
 }
+
+''' 
+{
+    "cnx": [
+        {
+            "user": "sdudent1",
+            "timeopen": 1651132800,
+            "timeclose": 1651140000
+        },
+        {
+            "user": "sdudent2",
+            "timeopen": 1651132800,
+            "timeclose": 1651140000
+        },
+        ...
+    ]
+}
+'''
