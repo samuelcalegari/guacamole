@@ -1,13 +1,13 @@
 # LDAP Synchronization for Apache Guacamole #
 
-## Current version ##
-
-1.0
-
 ## Features ##
 
 - Synchronize LDAP users in Apache Guacamole
 - Enable users from a Moodle web service
+
+## Requirement ##
+
+Python 3.8 or greater.
 
 ## Installation ##
 
@@ -19,17 +19,17 @@
 - Rename credentials-sample.py to credentials.py
 - Fill your information in these files
 
-## Launch ##
+## Usage ##
 
     python3 main.py
-
-## Requirement ##
-
-Python 3.8 or greater.
 
 ## Moodle Cron ##
 
 Add cron-moodle.py in crontab (every minute), witch permits to enable users from moodle
+
+## Version ##
+
+Current Version : 1.0 (28042022)
 
 ## Licence ##
 
