@@ -1,4 +1,6 @@
 import json
+from pprint import pprint
+
 import requests
 import time
 from guacapy import Guacamole
@@ -34,7 +36,7 @@ if request.status_code == 200:
                 },
             }
 
-            # guacamole.edit_user(user, payload)
+            guacamole.edit_user(user, payload)
             print('Utilisateur', user, 'activé')
 
     except ValueError as e:
