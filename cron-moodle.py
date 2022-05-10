@@ -25,15 +25,18 @@ if request.status_code == 200:
             date_until = time.strftime('%Y-%m-%d', time.localtime(timeclose))
             time_until = time.strftime('%H:%M:%S', time.localtime(timeclose))
 
+            u = guacamole.get_user(user)
+            attributes = u["attributes"]
+
+            attributes["disabled"] = False
+            attributes["access-window-start"] = time_from
+            attributes["access-window-end"] = time_until
+            attributes["valid-from"] = date_from
+            attributes["valid-until"] = date_until
+            attributes["timezone"] = "Europe/Paris"
+
             payload = {
-                "attributes": {
-                    "disabled": False,
-                    "access-window-start": time_from,
-                    "access-window-end": time_until,
-                    "valid-from": date_from,
-                    "valid-until": date_until,
-                    "timezone": "Europe/Paris"
-                },
+                "attributes": attributes,
             }
 
             guacamole.edit_user(user, payload)
