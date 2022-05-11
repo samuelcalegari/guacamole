@@ -10,7 +10,8 @@ config = {
     },
     'guacamole': {
         'server': '',  # Guacamole server
-        'group': ''  # Specific group must be create in guacamole before
+        'group': '',  # Specific group must be create in guacamole before
+        'activation_mode': '',  # Activation mode : global or date
     },
     'moodle': {
         'api_end_point': '',

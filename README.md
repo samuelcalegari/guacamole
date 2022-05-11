@@ -29,7 +29,7 @@ Add cron-moodle.py in crontab (every minute), witch permits to enable users from
 
 ## Version ##
 
-Current Version : 1.0 (28042022)
+Current Version : 1.1 (11052022)
 
 ## Licence ##
 

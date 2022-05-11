@@ -15,32 +15,63 @@ if request.status_code == 200:
 
     try:
         data = json.loads(request.text)
-        for entry in data['cnx']:
-            user = entry['user']
-            timeopen = entry['timeopen']
-            timeclose = entry['timeclose']
 
-            date_from = time.strftime('%Y-%m-%d', time.localtime(timeopen))
-            time_from = time.strftime('%H:%M:%S', time.localtime(timeopen))
-            date_until = time.strftime('%Y-%m-%d', time.localtime(timeclose))
-            time_until = time.strftime('%H:%M:%S', time.localtime(timeclose))
+        if config['guacamole']['activation_mode'] == 'date':
+            for entry in data['cnx']:
+                user = entry['user']
+                timeopen = entry['timeopen']
+                timeclose = entry['timeclose']
 
-            u = guacamole.get_user(user)
-            attributes = u["attributes"]
+                date_from = time.strftime('%Y-%m-%d', time.localtime(timeopen))
+                time_from = time.strftime('%H:%M:%S', time.localtime(timeopen))
+                date_until = time.strftime('%Y-%m-%d', time.localtime(timeclose))
+                time_until = time.strftime('%H:%M:%S', time.localtime(timeclose))
 
-            attributes["disabled"] = False
-            attributes["access-window-start"] = time_from
-            attributes["access-window-end"] = time_until
-            attributes["valid-from"] = date_from
-            attributes["valid-until"] = date_until
-            attributes["timezone"] = "Europe/Paris"
+                u = guacamole.get_user(user)
+                attributes = u["attributes"]
 
-            payload = {
-                "attributes": attributes,
-            }
+                attributes["disabled"] = False
+                attributes["access-window-start"] = time_from
+                attributes["access-window-end"] = time_until
+                attributes["valid-from"] = date_from
+                attributes["valid-until"] = date_until
+                attributes["timezone"] = "Europe/Paris"
 
-            guacamole.edit_user(user, payload)
-            print('Utilisateur', user, 'activé')
+                payload = {
+                    "attributes": attributes,
+                }
+
+                guacamole.edit_user(user, payload)
+                print('Utilisateur', user, 'activé')
+        else:
+
+            for entry in data['cnx']:
+                user = entry['user']
+
+                u = guacamole.get_user(user)
+                attributes = u["attributes"]
+                attributes["disabled"] = False
+
+                payload = {
+                    "attributes": attributes,
+                }
+
+                guacamole.edit_user(user, payload)
+                print('Utilisateur', user, 'activé')
+
+            for entry in data['oldcnx']:
+                user = entry['user']
+
+                u = guacamole.get_user(user)
+                attributes = u["attributes"]
+                attributes["disabled"] = True
+
+                payload = {
+                    "attributes": attributes,
+                }
+
+                guacamole.edit_user(user, payload)
+                print('Utilisateur', user, 'désactivé')
 
     except ValueError as e:
         print('Une erreur est survenue lors du décodage JSON')
