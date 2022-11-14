@@ -34,7 +34,7 @@ Add cron-destroy-sessions.py in crontab (every day, ie 3 am), witch permits to k
 
 ## Version ##
 
-Current Version : 1.2 (03062022)
+Current Version : 1.3 (14112022)
 
 ## Licence ##
 
