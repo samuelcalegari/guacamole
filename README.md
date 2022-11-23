@@ -5,6 +5,7 @@
 - Synchronize LDAP users in Apache Guacamole
 - Enable users from a Moodle web service
 - Kill all actives connections
+- Enable / Disable users tool script
 
 ## Requirement ##
 
@@ -32,7 +33,7 @@ Add cron-moodle.py in crontab (every minute), witch permits to enable users from
 
 Add cron-destroy-sessions.py in crontab (every day, ie 3 am), witch permits to kill all actives connections
 
-## Enable / Disable Tool Script ##
+## Enable / Disable users tool script ##
 
 use auth-user.py script move users from initial group (users disabled by default) in config.py 
 to another group (users already enabled)
