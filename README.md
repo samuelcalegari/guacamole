@@ -32,6 +32,18 @@ Add cron-moodle.py in crontab (every minute), witch permits to enable users from
 
 Add cron-destroy-sessions.py in crontab (every day, ie 3 am), witch permits to kill all actives connections
 
+## Enable / Disable Tool Script ##
+
+use auth-user.py script move users from initial group (users disabled by default) in config.py 
+to another group (users already enabled)
+
+    Usage: 
+    python3 auth-users.py -o [enable|disable] ['filter'] ['group']
+
+    Examples:
+    python3 auth-users.py -o enable '(uid=jsmith)' 'Direct'
+    python3 auth-users.py -o disable '(&(departmentNumber=SALES)(enabled=TRUE))' 'Direct'
+
 ## Version ##
 
 Current Version : 1.3 (14112022)
