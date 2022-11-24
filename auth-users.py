@@ -18,7 +18,7 @@ long_options = ["Help", "Operation="]
 # Variables
 operation = ''
 ldap_filter = ''
-group = ''
+group = config['guacamole']['group_always_on_users']
 
 try:
     # Parsing argument
@@ -28,20 +28,19 @@ try:
     for currentArgument, currentValue in arguments:
 
         if currentArgument in ("-h", "--Help"):
-            print("Usage : auth-users.py -o [enable|disable] ['filter'] ['group']")
+            print("Usage : auth-users.py -o [enable|disable] ['filter']")
             sys.exit()
 
         elif currentArgument in ("-o", "--Operation"):
             operation = currentValue
 
-    if len(sys.argv) != 5:
+    if len(sys.argv) != 4:
         raise NameError('Missing arguments see: auth-users.py -h')
 
     if operation not in ['enable', 'disable']:
         raise NameError('Argument operation must be disable or enable')
 
     ldap_filter = sys.argv[3]
-    group = sys.argv[4]
 
     # Guacamole
     guacamole = Guacamole(config['guacamole']['server'], credentials['guacamole']['user'],

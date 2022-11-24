@@ -10,7 +10,10 @@ config = {
     },
     'guacamole': {
         'server': '',  # Guacamole server
-        'group': '',  # Specific group must be create in guacamole before
+        'group': '',  # Specific group must be created in guacamole before
+        # Used for LDAP synchronisation
+        'group_always_on_users': '',  # Specific group must be created in guacamole before
+        # Optional, used by tool auth-user.py
         'activation_mode': '',  # Activation mode : global or date
         'remaining_user_action': ''  # delete, disable, none
     },

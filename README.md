@@ -3,7 +3,7 @@
 ## Features ##
 
 - Synchronize LDAP users in Apache Guacamole
-- Enable users from a Moodle web service
+- Enable / Disable users from a Moodle web service
 - Kill all actives connections
 - Enable / Disable users tool script
 
@@ -39,11 +39,11 @@ use auth-user.py script move users from initial group (users disabled by default
 to another group (users already enabled)
 
     Usage: 
-    python3 auth-users.py -o [enable|disable] ['filter'] ['group']
+    python3 auth-users.py -o [enable|disable] ['filter']
 
     Examples:
-    python3 auth-users.py -o enable '(uid=jsmith)' 'Direct'
-    python3 auth-users.py -o disable '(&(departmentNumber=SALES)(enabled=TRUE))' 'Direct'
+    python3 auth-users.py -o enable '(uid=jsmith)'
+    python3 auth-users.py -o disable '(&(departmentNumber=SALES)(enabled=TRUE))'
 
 ## Version ##
 
