@@ -61,8 +61,8 @@ if request.status_code == 200:
                     print('Utilisateur', user, 'activé')
 
             for entry in data['oldcnx']:
+                user = entry['user']
                 if config['guacamole']['group'] in guacamole.get_user_usergroups(user):
-                    user = entry['user']
 
                     u = guacamole.get_user(user)
                     attributes = u["attributes"]
