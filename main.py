@@ -8,6 +8,7 @@ import secrets
 guacamole = Guacamole(config['guacamole']['server'], credentials['guacamole']['user'], credentials['guacamole']['pass'])
 
 guacamoleUsersName = guacamole.get_group_members(config['guacamole']['group'])
+guacamoleAllUsersName = guacamole.get_users()
 
 # LDAP Search
 ldapServer = Server(config['ldap']['server'])
@@ -42,42 +43,43 @@ if status:
         lastname = entry['attributes'][config['ldap']['lastname_field']][0] if (len(
             entry['attributes'][config['ldap']['lastname_field']]) != 0) else ""
 
-        if not username in guacamoleUsersName:
-
-            if username != "" and email != "" and firstname != "" and lastname != "":
-                # Create user
-                payload = {
-                    "username": username,
-                    "password": secrets.token_urlsafe(16),
-                    "attributes": {
-                        "guac-full-name": firstname + ' ' + lastname,
-                        "guac-organization": "UPVD",
-                        "guac-email-address": email,
-                        "disabled": True,
-                        "expired": "",
-                        "access-window-start": "",
-                        "access-window-end": "",
-                        "valid-from": "",
-                        "valid-until": "",
-                        "timezone": "null"
+        if username not in guacamoleUsersName:
+            # Prevent to add an existing user
+            if username not in guacamoleAllUsersName:
+                if username != "" and email != "" and firstname != "" and lastname != "":
+                    # Create user
+                    payload = {
+                        "username": username,
+                        "password": secrets.token_urlsafe(16),
+                        "attributes": {
+                            "guac-full-name": firstname + ' ' + lastname,
+                            "guac-organization": "UPVD",
+                            "guac-email-address": email,
+                            "disabled": True,
+                            "expired": "",
+                            "access-window-start": "",
+                            "access-window-end": "",
+                            "valid-from": "",
+                            "valid-until": "",
+                            "timezone": "null"
+                        }
                     }
-                }
-                try:
-                    guacamole.add_user(payload)
+                    try:
+                        guacamole.add_user(payload)
 
-                    # Add user to group
-                    payload = [{"op": "add", "path": "/", "value": username}]
-                    guacamole.edit_group_members(config['guacamole']['group'], payload)
+                        # Add user to group
+                        payload = [{"op": "add", "path": "/", "value": username}]
+                        guacamole.edit_group_members(config['guacamole']['group'], payload)
 
-                    total_users_created = total_users_created + 1
-                    print('Utilisateur', username, 'crée')
-                except:
-                    print('Utilisateur', username, 'non crée')
+                        total_users_created = total_users_created + 1
+                        print('Utilisateur', username, 'crée')
+                    except:
+                        print('Utilisateur', username, 'non crée')
         else:
             # User in Guacamole exists : remove from list
             guacamoleUsersName.remove(username)
 
-    # Delete or disable users who are in the list (user are in RocketChat, but not in LDAP anymore)
+    # Delete or disable users who are in the list (user are in Guacamole, but not in LDAP anymore)
     if config['guacamole']['remaining_user_action'] == 'delete':
         for userName in guacamoleUsersName:
             guacamole.delete_user(userName)
